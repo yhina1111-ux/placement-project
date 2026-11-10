@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlaceWise – Placement readiness</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1b1b3a;--muted:#6b6b8a;--brand:#5b5bf0;--good:#12a37f;--bad:#f08a3c;--lav:#ece9ff;--mint:#dcf6ee;--peach:#ffeedd;--blue:#e4ecff;
+--serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);line-height:1.5;background:linear-gradient(135deg,#fdeaf2,#f3f0ff 45%,#e1f8f1) fixed}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1;margin:0 0 .4rem}
+h1{font-size:clamp(2.4rem,6vw,4.2rem)}h2{font-size:2rem}h3{font-size:1.25rem}
+h1 em{color:var(--brand);background:linear-gradient(90deg,#5b5bf0,#c24fa8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.muted{color:var(--muted)}.s{font-size:.85rem;margin:0 0 1rem}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);margin:0 0 .3rem}
+.btn{display:inline-block;background:var(--brand);color:#fff!important;border:0;border-radius:12px;padding:.85rem 1.4rem;font:700 1rem var(--sans);cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(91,91,240,.3)}
+.btn:hover{filter:brightness(1.08)}.btn.small{padding:.5rem 1rem;font-size:.9rem}.btn.wide{width:100%;margin-top:1.2rem}
+.btn.ghost{background:#fff;color:var(--ink)!important;box-shadow:none;margin-left:.6rem}
+.btn.white{background:#fff;color:var(--brand)!important;box-shadow:none;padding:.5rem 1rem;font-size:.85rem;margin-top:.8rem}
+:focus-visible{outline:3px solid #c24fa8;outline-offset:2px}
+.logo{background:var(--brand);color:#fff;border-radius:10px;width:34px;height:34px;display:grid;place-items:center}
+.brand{display:flex;align-items:center;gap:.5rem;font-size:1.2rem;color:var(--ink);text-decoration:none}.brand b{color:var(--brand)}
+.card{background:#fff;border-radius:22px;padding:1.5rem;box-shadow:0 12px 36px rgba(60,50,140,.1)}
+.lav{background:var(--lav)}.mint{background:var(--mint)}.peach{background:var(--peach)}.blue{background:var(--blue)}
+.card.dark{background:linear-gradient(135deg,#6b3d7e,#2f2a6b);color:#fff}
+.nav{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:.8rem max(1.25rem,calc((100% - 1080px)/2));background:rgba(255,255,255,.88);backdrop-filter:blur(8px)}
+nav{display:flex;gap:1.6rem}nav a{color:var(--muted);text-decoration:none;font-weight:500}nav a:hover{color:var(--brand)}
+.hero,.how{max-width:1080px;margin:0 auto;padding:4rem 1.25rem}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:2.5rem;align-items:center}
+.pill{display:inline-block;background:#fff;color:var(--brand);font-weight:700;font-size:.8rem;padding:.35rem .9rem;border-radius:99px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:34rem;margin:1rem 0 1.6rem}
+.hero-art{position:relative;padding:1.5rem 0}
+.hero-card{background:#fff;border-radius:26px;padding:1.5rem;transform:rotate(2deg);box-shadow:0 20px 50px rgba(60,50,140,.15)}
+.tag{position:absolute;z-index:2;background:#fff;border-radius:12px;padding:.45rem .8rem;font-size:.8rem;font-weight:700;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.t1{top:-4px;right:0;background:#fff1e0;color:#c2631a}.t2{bottom:-4px;left:-10px;background:#dcf6ee;color:#0d7a5f}
+.row{display:flex;align-items:center;gap:1.2rem}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1rem}.m{border-radius:14px;padding:.7rem}.m b,.m small{display:block}.m small{color:var(--muted)}
+.ring{--p:0;flex:none;width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--brand) calc(var(--p)*1%),#e9e7f7 0)}
+.ring span{width:calc(100% - 24px);height:calc(100% - 24px);background:#fff;border-radius:50%;display:grid;place-items:center;font:700 1.6rem var(--sans)}
+.ring.big{width:150px;height:150px}
+.how{text-align:center}.how>p{max-width:34rem;margin:0 auto}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin:2rem 0;text-align:left}
+.num{float:right;color:#cfcbe6;font-weight:700;font-size:1.4rem}.grid3 p{color:var(--muted);margin:.3rem 0}
+.grid3 .card:nth-child(1){transform:rotate(-1deg)}.grid3 .card:nth-child(3){transform:rotate(1deg)}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;text-align:left;color:#fff;border-radius:28px;padding:2.2rem;background:linear-gradient(120deg,#4a2c6e,#3b4f9a)}
+.cta .eyebrow{color:#c9c4ff}.cta h2{max-width:28rem}.cta p{margin:.2rem 0}
+#app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:rgba(255,255,255,.8);padding:1.2rem;display:flex;flex-direction:column;gap:.3rem;position:sticky;top:0;height:100vh}
+.side .brand{margin-bottom:1.5rem}
+.side button{text-align:left;background:none;border:0;border-radius:12px;padding:.65rem .8rem;font:500 .95rem var(--sans);color:var(--muted);cursor:pointer}
+.side button:hover,.side button.on{background:var(--lav);color:var(--brand)}
+.tip{margin-top:auto;background:var(--lav);border-radius:16px;padding:1rem;font-size:.85rem}.tip p{margin:.3rem 0 0;color:var(--muted)}
+main{padding:0 2rem 3rem;max-width:1080px}.top{display:flex;justify-content:flex-start;padding:1.1rem 0}
+.top a.on,.nav a.on{color:var(--brand);border-bottom:2px solid var(--brand)}
+.pane{padding-top:1rem}.pane>.muted{margin:0 0 1.2rem}
+.dash{display:grid;grid-template-columns:1.5fr 1fr;gap:1.25rem}.empty{text-align:center;padding:2.5rem}
+.chip{display:inline-block;background:#d6f5ea;color:#0d7a5f;font-weight:700;font-size:.8rem;border-radius:99px;padding:.2rem .7rem;margin-bottom:.4rem}
+.facts{display:flex;gap:1.5rem;background:rgba(255,255,255,.7);border-radius:14px;padding:.8rem 1rem;margin-top:1.2rem}
+.facts small{display:block;color:var(--muted);font-size:.7rem}
+.srow{margin:.7rem 0;font-size:.85rem}.srow div{display:flex;justify-content:space-between}
+.tr{height:7px;background:rgba(255,255,255,.7);border-radius:9px;margin-top:.25rem}.tr i{display:block;height:100%;border-radius:9px;background:var(--brand)}
+.list{list-style:none;padding:0;margin:.8rem 0 0}.list li{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid rgba(0,0,0,.07)}
+.list b{color:var(--good);white-space:nowrap}.list b.zero{color:var(--muted)}
+.bar-row{display:grid;grid-template-columns:8.5rem 1fr 3rem;gap:.5rem;align-items:center;margin:.45rem 0;font-size:.82rem}
+.track{height:10px;background:rgba(255,255,255,.7);border-radius:99px;position:relative}.track i{position:absolute;top:0;bottom:0;border-radius:99px}
+.track::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#9a97c0}
+.pos i{background:var(--good);left:50%}.neg i{background:var(--bad);right:50%}.bar-row em{font-style:normal;text-align:right;color:var(--muted)}
+.two{display:grid;grid-template-columns:1.6fr 1fr;gap:1.25rem;align-items:start}.side-cards{display:grid;gap:1rem}
+.n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;font:700 .9rem var(--sans);margin-right:.6rem}
+hr{border:0;border-top:1px solid #d9d5f3;margin:1.3rem 0}
+.field{margin-bottom:1rem}.field label{display:flex;justify-content:space-between;font-weight:500;font-size:.9rem;margin-bottom:.2rem}
+.field output{color:var(--brand);font-weight:700;margin-left:auto;margin-right:.2rem;font-size:1.1rem}
+input[type=range]{width:100%;accent-color:var(--brand)}
+.steppers{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.1rem 0}
+.step{background:#fff;border-radius:14px;padding:.7rem;text-align:center;font-size:.78rem;color:var(--muted)}
+.step div{display:flex;justify-content:center;align-items:center;gap:.7rem;margin-top:.3rem;color:var(--ink)}.step b{font-size:1.4rem;min-width:1.4rem}
+.step button{width:30px;height:30px;border-radius:9px;border:1px solid #e2dff5;background:#f7f6ff;cursor:pointer;font-size:1.1rem}
+.toggles{display:grid;gap:.5rem}.toggles label{background:#fff;border-radius:12px;padding:.65rem 1rem;display:flex;gap:.7rem;cursor:pointer}
+.toggles input{accent-color:var(--brand);width:18px;height:18px}
+.error{color:#b3261e;background:#fdecea;padding:.7rem 1rem;border-radius:10px;margin:1rem 0 0}
+footer{text-align:center}
+@media(max-width:860px){.hero,.grid3,.dash,.two{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}
+#app{grid-template-columns:1fr}.side{display:none}main{padding:0 1rem 2rem}nav a:nth-child(n+3){display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.badge{background:var(--lav);color:var(--brand);border-radius:99px;font-size:.7rem;font-weight:700;padding:.05rem .5rem;margin-left:.4rem}
+.side button.on .badge{background:#fff}.acc{margin-top:1rem}
+.top{justify-content:space-between;align-items:center}
+.who{display:flex;align-items:center;gap:.7rem;font-size:.85rem}.who small{display:block;color:var(--muted);font-size:.7rem}
+.av{width:38px;height:38px;border-radius:12px;background:var(--lav);color:var(--brand);display:grid;place-items:center;font-weight:700}
+.bellw{position:relative}.bell{background:#fff;border:1px solid #e2dff5;border-radius:12px;width:40px;height:40px;cursor:pointer;position:relative}
+.bell i{position:absolute;top:7px;right:8px;width:8px;height:8px;border-radius:50%;background:#e5484d}
+.notes{position:absolute;right:0;top:46px;width:240px;background:#fff;border-radius:14px;padding:.9rem;box-shadow:0 12px 30px rgba(60,50,140,.2);font-size:.85rem;z-index:9}.notes p{margin:.2rem 0 0}
+.date{display:inline-block;background:var(--lav);color:var(--brand);font-size:.7rem;font-weight:700;border-radius:8px;padding:.2rem .6rem;margin-bottom:.5rem;text-transform:uppercase}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;margin-bottom:.5rem}.hd p{margin:0}
+.lnk{color:var(--brand);font-weight:700;font-size:.8rem;text-decoration:none;text-transform:none;letter-spacing:0}.lnk.r{float:right}
+.upd{float:right;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0}
+#trend{width:100%;height:auto}.dash .blue:not(.trend){grid-column:1/-1}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{text-align:left;padding:.6rem .5rem;border-bottom:1px solid #eceaf8}th{color:var(--muted);font-weight:500}
+.pfc{max-width:480px}input[type=text]{width:100%;padding:.7rem .9rem;border:1px solid #d9d5f3;border-radius:12px;font:inherit}
+details{background:#fff;border-radius:14px;padding:1rem 1.2rem;margin-bottom:.7rem;box-shadow:0 6px 18px rgba(60,50,140,.07)}summary{font-weight:700;cursor:pointer}details p{margin:.6rem 0 0;color:var(--muted)}
+.dark small{opacity:.7;display:block;margin-top:.6rem}
+@media print{.side,.top,.btn,.bell{display:none!important}#app{display:block}body{background:#fff}}
+
+</style>
+</head><body>
+
+<div id="home" class="view">
+  <header class="nav">
+    <a class="brand" href="#" data-go="home"><span class="logo">↗</span>Place<b>Wise</b></a>
+    <nav><a href="#" data-go="overview">Dashboard</a><a href="#" data-go="predict">Predict</a><a href="#" data-go="roadmap">My Roadmap</a><a href="#how">How it works</a></nav>
+    <a href="#" class="btn small" data-go="predict">Get started</a>
+  </header>
+  <section class="hero">
+    <div>
+      <p class="pill">✦ AI-powered placement guidance</p>
+      <h1>Turn placement anxiety into a <em>clear action plan.</em></h1>
+      <p class="lead">Understand your placement readiness, discover what truly impacts your chances, and know exactly what to improve next.</p>
+      <a class="btn" href="#" data-go="predict">Check my readiness</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <span class="tag t1">⚡ Based on 10,000 student records</span>
+      <div class="hero-card">
+        <p class="eyebrow">Example readiness</p><h3>Placement outlook</h3>
+        <div class="row"><div class="ring" style="--p:78"><span>78%</span></div>
+        <p class="muted">You're on the right track. Focus on two key areas to improve your chances further.</p></div>
+        <div class="mini"><div class="m lav"><b>+15% impact</b><small>Add placement training</small></div><div class="m mint"><b>Top strength</b><small>Aptitude score</small></div></div>
+      </div>
+      <span class="tag t2">✓ Explainable, not a black box</span>
+    </div>
+  </section>
+  <section class="how" id="how">
+    <h2>Know exactly what to do next</h2>
+    <p class="muted">PlaceWise turns your academic and skill profile into a practical, personalized path forward.</p>
+    <div class="grid3">
+      <div class="card lav"><span class="num">01</span><h3>See your readiness</h3><p>Get a clear placement probability based on your current profile.</p><a class="btn white" href="#" data-go="predict">Try it</a></div>
+      <div class="card mint"><span class="num">02</span><h3>Understand the why</h3><p>See exactly which factors help or hold you back, with no mysterious black-box scores.</p><a class="btn white" href="#" data-go="overview">See factors</a></div>
+      <div class="card peach"><span class="num">03</span><h3>Improve with purpose</h3><p>Follow a ranked list built around the changes that make the biggest difference.</p><a class="btn white" href="#" data-go="roadmap">See roadmap</a></div>
+    </div>
+    <div class="cta"><div><p class="eyebrow">Your future is worth preparing for</p><h2>Ready to replace guesswork with a game plan?</h2><p>Your first prediction takes less than two minutes.</p></div>
+    <a class="btn white" href="#" data-go="predict">Check my placement readiness</a></div>
+  </section>
+</div>
+
+<div id="app" class="view" hidden>
+  <aside class="side">
+    <a class="brand" href="#" data-go="home"><span class="logo">↗</span>Place<b>Wise</b></a>
+    <p class="eyebrow">Workspace</p>
+    <button data-go="overview">▦ Overview</button>
+    <button data-go="predict">✦ Predict outcome</button>
+    <button data-go="roadmap">◎ My roadmap <span id="badge" class="badge" hidden></span></button><button data-go="reports">▤ My reports</button><p class="eyebrow acc">Account</p><button data-go="profile">☺ My profile</button><button data-go="help">? Help center</button>
+    <div class="tip"><b>Quick tip</b><p>Change one thing at a time. The roadmap shows which change matters most.</p></div>
+  </aside>
+  <main>
+    <header class="top">
+      <nav><a href="#" data-go="overview">Dashboard</a><a href="#" data-go="predict">Predict</a><a href="#" data-go="roadmap">My Roadmap</a><a href="#" data-go="home">Home</a></nav><div class="who"><div class="bellw"><button id="bell" class="bell" aria-label="Notifications">🔔<i id="dot" hidden></i></button><div id="notes" class="notes" hidden></div></div><div class="av" id="av">S</div><div><b id="uname">Student</b><small id="ucourse">Your course</small></div></div>
+    </header>
+
+    <section class="pane" id="p-overview">
+      <span class="date" id="today"></span><div class="hd"><div><h2 id="greet">Good morning</h2><p class="muted">Here's how your placement preparation is shaping up.</p></div><button class="btn" data-go="predict">✦ New prediction</button></div>
+      <div id="ov-empty" class="card lav empty"><h3>No prediction yet</h3><p>Enter your profile to see your readiness.</p><button class="btn" data-go="predict">New prediction</button></div>
+      <div id="ov-data" class="dash" hidden>
+        <div class="card lav"><p class="eyebrow">Placement readiness <small id="upd" class="upd"></small></p><h3>Your current outlook</h3>
+          <div class="row"><div class="ring big" id="ring"><span id="prob"></span></div><div><span class="chip" id="delta" hidden></span> <span class="chip" id="level"></span><p id="verdict"></p><a href="#" data-go="roadmap" class="lnk">View full analysis ›</a></div></div>
+          <div class="facts"><div><small>Model confidence</small><b id="conf"></b></div><div><small>Model accuracy</small><b>81%</b></div><div><small>Trained on</small><b>10,000 records</b></div></div></div>
+        <div class="card mint"><p class="eyebrow">Profile strength <a href="#" data-go="predict" class="lnk r">Edit profile</a></p><h3>Key factors</h3><div id="strength"></div></div>
+        <div class="card peach"><p class="eyebrow">Biggest opportunities</p><h3>What will move the needle</h3><ul class="list" id="top3"></ul></div>
+        <div class="card blue trend"><p class="eyebrow">Progress <span id="tdelta" class="lnk r"></span></p><h3>Readiness trend</h3><svg id="trend" viewBox="0 0 300 110" role="img" aria-label="Readiness trend"></svg><p class="muted s" id="tnote"></p></div><div class="card blue"><p class="eyebrow">Why this score</p><h3>What helps and what holds you back</h3><div id="bars"></div></div>
+      </div>
+    </section>
+
+    <section class="pane" id="p-predict" hidden>
+      <h2>Predict your placement outcome</h2><p class="muted">Adjust the details below. Your data is only used to generate your prediction.</p>
+      <div class="two">
+      <form id="form" class="card lav">
+        <h3><span class="n">1</span>Academic performance</h3><p class="muted s">Tell us where you stand academically.</p>
+        <div class="field"><label for="cgpa">Current CGPA <output id="o_cgpa">7.5</output>/10</label><input type="range" id="cgpa" min="4" max="10" step="0.1" value="7.5"></div>
+        <div class="field"><label for="ssc">SSC marks <output id="o_ssc">75</output>%</label><input type="range" id="ssc" min="40" max="100" value="75"></div>
+        <div class="field"><label for="hsc">HSC marks <output id="o_hsc">75</output>%</label><input type="range" id="hsc" min="40" max="100" value="75"></div>
+        <hr>
+        <h3><span class="n">2</span>Skills &amp; experience</h3><p class="muted s">Your practical exposure matters just as much.</p>
+        <div class="field"><label for="aptitude">Aptitude test score <output id="o_aptitude">70</output>/100</label><input type="range" id="aptitude" min="0" max="100" value="70"></div>
+        <div class="field"><label for="soft_skills">Communication &amp; soft skills <output id="o_soft_skills">4.0</output>/5</label><input type="range" id="soft_skills" min="1" max="5" step="0.1" value="4"></div>
+        <div class="steppers">
+          <div class="step"><span>Projects completed</span><div><button type="button" data-t="projects" data-d="-1">−</button><b id="projects">2</b><button type="button" data-t="projects" data-d="1">+</button></div></div>
+          <div class="step"><span>Internships completed</span><div><button type="button" data-t="internships" data-d="-1">−</button><b id="internships">1</b><button type="button" data-t="internships" data-d="1">+</button></div></div>
+          <div class="step"><span>Workshops / certifications</span><div><button type="button" data-t="workshops" data-d="-1">−</button><b id="workshops">1</b><button type="button" data-t="workshops" data-d="1">+</button></div></div>
+        </div>
+        <div class="toggles"><label><input type="checkbox" id="extracurricular"> Extracurricular activities</label><label><input type="checkbox" id="training"> Attended placement training</label></div>
+        <button class="btn wide" type="submit">✦ Generate my prediction</button>
+        <p id="error" class="error" role="alert" hidden></p>
+      </form>
+      <div class="side-cards">
+        <div class="card mint"><h3>Your data stays yours</h3><p class="muted s">Your inputs are used only to generate this prediction. Nothing is saved.</p></div>
+        <div class="card peach"><h3>How accurate is it?</h3><p class="muted s">The model is trained on 10,000 past student records and is right about 81% of the time on unseen students.</p></div>
+        <div class="card dark"><p>"In this dataset, aptitude score and placement training move the prediction most. Internships barely matter."</p><small>Insight from the trained model</small></div>
+      </div></div>
+    </section>
+
+    <section class="pane" id="p-roadmap" hidden>
+      <h2>Your roadmap</h2><p class="muted">Each change below is tested on the model, one at a time, and ranked by gain.</p>
+      <div class="card peach"><div id="rm-empty" class="empty"><p>Generate a prediction first.</p><button class="btn" data-go="predict">New prediction</button></div><ul class="list" id="roadmapList"></ul></div>
+    </section>
+    <section class="pane" id="p-reports" hidden>
+      <div class="hd"><div><h2>My reports</h2><p class="muted">Every prediction you generate is saved in this browser.</p></div><button class="btn" id="print">⬇ Download report</button></div>
+      <div class="card"><p id="rp-empty" class="muted">No reports yet. Generate a prediction first.</p>
+        <div class="tw"><table id="rp" hidden><thead><tr><th>Date</th><th>Readiness</th><th>CGPA</th><th>Aptitude</th><th>Projects</th><th>Training</th></tr></thead><tbody></tbody></table></div>
+        <button class="btn ghost" id="clear" hidden>Clear history</button></div>
+    </section>
+    <section class="pane" id="p-profile" hidden>
+      <h2>My profile</h2><p class="muted">Used only for your greeting. Saved in this browser.</p>
+      <form id="pf" class="card lav pfc"><div class="field"><label for="name">Your name</label><input id="name" type="text" maxlength="30"></div>
+        <div class="field"><label for="course">Course</label><input id="course" type="text" maxlength="40" placeholder="e.g. Computer Science"></div>
+        <button class="btn" type="submit">Save profile</button><p id="saved" class="muted s" hidden>Saved.</p></form>
+    </section>
+    <section class="pane" id="p-help" hidden>
+      <h2>Help center</h2><p class="muted">Answers to common questions.</p>
+      <details><summary>How does the prediction work?</summary><p>A logistic regression model, trained on 10,000 past student records, turns your 10 inputs into a placement probability.</p></details>
+      <details><summary>How accurate is it?</summary><p>About 81% on students it had not seen, with an AUC of 0.88. It is an estimate, not a guarantee.</p></details>
+      <details><summary>Why do internships show almost no effect?</summary><p>In this dataset the model found internships nearly irrelevant. Aptitude score, placement training and extracurriculars mattered most.</p></details>
+      <details><summary>What do the bars mean?</summary><p>Green bars raised your score and orange bars lowered it, compared with an average student.</p></details>
+      <details><summary>Is my data stored?</summary><p>Only in your own browser, for your reports and trend. Nothing is saved on a server.</p></details>
+    </section>
+  </main>
+</div>
+<script>
+const API = "http://127.0.0.1:8000/predict";   // change to your Render URL after deploying
+const $ = (id) => document.getElementById(id);
+const counters = { projects: 2, internships: 1, workshops: 1 };
+let state = null;   // { profile, result, rows }
+
+const NAMES = { CGPA: "CGPA", Internships: "Internships", Projects: "Projects", "Workshops/Certifications": "Workshops / certs",
+  AptitudeTestScore: "Aptitude score", SoftSkillsRating: "Soft skills", ExtracurricularActivities: "Extracurriculars",
+  PlacementTraining: "Placement training", SSC_Marks: "SSC marks", HSC_Marks: "HSC marks" };
+
+// ---- navigation between views ----
+function go(v) {
+  const inApp = ["overview", "predict", "roadmap", "reports", "profile", "help"].includes(v);
+  $("home").hidden = inApp; $("app").hidden = !inApp;
+  if (inApp) {
+    document.querySelectorAll(".pane").forEach((p) => (p.hidden = p.id !== "p-" + v));
+    document.querySelectorAll("[data-go]").forEach((e) => e.classList.toggle("on", e.dataset.go === v && (e.tagName === "BUTTON" || e.closest(".top"))));
+  }
+  if (v === "reports") renderReports();
+  if (v === "profile") loadProfile();
+  window.scrollTo(0, 0);
+}
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-go]");
+  if (t) { e.preventDefault(); go(t.dataset.go); }
+});
+
+// ---- form controls ----
+["cgpa", "aptitude", "soft_skills", "ssc", "hsc"].forEach((id) =>
+  $(id).addEventListener("input", () => ($("o_" + id).textContent = id === "soft_skills" ? Number($(id).value).toFixed(1) : $(id).value)));
+document.querySelectorAll(".step button").forEach((b) => b.addEventListener("click", () => {
+  const t = b.dataset.t; counters[t] = Math.max(0, Math.min(20, counters[t] + Number(b.dataset.d))); $(t).textContent = counters[t];
+}));
+
+const readProfile = () => ({ cgpa: +$("cgpa").value, internships: counters.internships, projects: counters.projects,
+  workshops: counters.workshops, aptitude: +$("aptitude").value, soft_skills: +$("soft_skills").value,
+  extracurricular: $("extracurricular").checked, training: $("training").checked, ssc: +$("ssc").value, hsc: +$("hsc").value });
+
+async function predict(p) {
+  const r = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(p) });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+async function whatIf(base, prob) {
+  const ideas = [];
+  if (!base.training) ideas.push(["Attend placement training", { training: true }]);
+  if (base.aptitude < 100) ideas.push(["Raise aptitude score by 10", { aptitude: Math.min(100, base.aptitude + 10) }]);
+  ideas.push(["Complete 1 more project", { projects: base.projects + 1 }]);
+  ideas.push(["Add 1 workshop or certification", { workshops: base.workshops + 1 }]);
+  ideas.push(["Complete 1 more internship", { internships: base.internships + 1 }]);
+  if (!base.extracurricular) ideas.push(["Join an extracurricular activity", { extracurricular: true }]);
+  const rows = await Promise.all(ideas.map(async ([label, c]) => {
+    const r = await predict({ ...base, ...c });
+    return { label, gain: Math.round((r.probability - prob) * 10) / 10 };
+  }));
+  return rows.sort((a, b) => b.gain - a.gain);
+}
+
+const li = (x) => `<li><span>${x.label}</span><b class="${x.gain <= 0.1 ? "zero" : ""}">${x.gain > 0 ? "+" : ""}${x.gain} pts</b></li>`;
+
+function render() {
+  const { profile: p, result: r, rows } = state;
+  $("ov-empty").hidden = true; $("ov-data").hidden = false; $("rm-empty").hidden = true;
+  $("ring").style.setProperty("--p", r.probability);
+  $("prob").textContent = r.probability + "%";
+  $("level").textContent = r.probability >= 70 ? "Strong" : r.probability >= 50 ? "Likely" : "Needs work";
+  $("verdict").textContent = r.probability >= 70 ? "Your profile shows strong potential. Keep building on it."
+    : r.probability >= 50 ? "You are on the right side of 50%. A few changes will secure it."
+    : "You are below 50% for now. The roadmap shows where to start.";
+
+  const S = [["CGPA", p.cgpa, p.cgpa / 10, "/10"], ["Aptitude score", p.aptitude, p.aptitude / 100, "/100"],
+    ["Soft skills", p.soft_skills, p.soft_skills / 5, "/5"], ["Projects", p.projects, p.projects / 6, ""], ["Internships", p.internships, p.internships / 4, ""]];
+  $("strength").innerHTML = S.map(([n, v, f, u]) => `<div class="srow"><div><span>${n}</span><b>${v}${u}</b></div><div class="tr"><i style="width:${Math.min(1, f) * 100}%"></i></div></div>`).join("");
+
+  const max = Math.max(...r.explanation.map((x) => Math.abs(x.impact)), 0.01);
+  $("bars").innerHTML = r.explanation.map((x) => `<div class="bar-row"><span>${NAMES[x.feature] || x.feature}</span>
+    <div class="track ${x.impact >= 0 ? "pos" : "neg"}"><i style="width:${(Math.abs(x.impact) / max) * 50}%"></i></div><em>${x.impact > 0 ? "+" : ""}${x.impact.toFixed(2)}</em></div>`).join("");
+
+  $("top3").innerHTML = rows.slice(0, 3).map(li).join("");
+  $("roadmapList").innerHTML = rows.map(li).join("");
+  decorate();
+}
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = $("error"); err.hidden = true;
+  const btn = e.submitter; btn.disabled = true; btn.textContent = "Working…";
+  try {
+    const profile = readProfile(), result = await predict(profile);
+    state = { profile, result, rows: await whatIf(profile, result.probability) };
+    saveHistory(); render(); go("overview");
+  } catch (x) {
+    err.textContent = "Could not reach the prediction server. Check that the backend is running at " + API + " and try again.";
+    err.hidden = false;
+  } finally { btn.disabled = false; btn.textContent = "✦ Generate my prediction"; }
+});
+
+// ---- history, profile, reports, trend ----
+const HK = "pw_hist", UK = "pw_user";
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+const hist = () => load(HK, []);
+const user = () => load(UK, { name: "", course: "" });
+
+function saveHistory() {
+  const h = hist(), p = state.profile;
+  h.push({ t: Date.now(), prob: state.result.probability, cgpa: p.cgpa, aptitude: p.aptitude, projects: p.projects, training: p.training });
+  save(HK, h.slice(-30));
+}
+function applyUser() {
+  const u = user(), n = u.name || "Student", hr = new Date().getHours();
+  $("uname").textContent = n;
+  $("ucourse").textContent = u.course || "Your course";
+  $("av").textContent = n.split(" ").filter(Boolean).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  $("greet").textContent = (hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening") + (u.name ? ", " + u.name.split(" ")[0] : "");
+  $("today").textContent = new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
+}
+function loadProfile() { const u = user(); $("name").value = u.name; $("course").value = u.course; $("saved").hidden = true; }
+$("pf").addEventListener("submit", (e) => {
+  e.preventDefault();
+  save(UK, { name: $("name").value.trim(), course: $("course").value.trim() });
+  applyUser(); $("saved").hidden = false;
+});
+
+function decorate() {
+  const h = hist(), p = state.result.probability;
+  $("conf").textContent = Math.round(Math.max(p, 100 - p)) + "%";
+  $("upd").textContent = "Updated just now";
+  const d = h.length > 1 ? Math.round((h[h.length - 1].prob - h[h.length - 2].prob) * 10) / 10 : null;
+  $("delta").hidden = d === null;
+  if (d !== null) $("delta").textContent = (d >= 0 ? "▲ +" : "▼ ") + d + " pts since last check";
+  $("badge").hidden = false; $("badge").textContent = state.rows.length;
+  $("dot").hidden = false;
+  drawTrend(h);
+}
+function drawTrend(h) {
+  const pts = h.slice(-8), svg = $("trend");
+  if (pts.length < 2) {
+    svg.innerHTML = ""; $("tdelta").textContent = "";
+    $("tnote").textContent = "Improve something, predict again, and your trend appears here.";
+    return;
+  }
+  const xs = (i) => 15 + (i * 270) / (pts.length - 1), ys = (v) => 100 - v * 0.9;
+  const line = pts.map((q, i) => xs(i) + "," + ys(q.prob)).join(" ");
+  svg.innerHTML = `<polygon points="15,100 ${line} 285,100" fill="#5b5bf0" opacity=".15"/><polyline points="${line}" fill="none" stroke="#5b5bf0" stroke-width="3" stroke-linejoin="round"/>` +
+    pts.map((q, i) => `<circle cx="${xs(i)}" cy="${ys(q.prob)}" r="4" fill="#fff" stroke="#5b5bf0" stroke-width="2"/>`).join("");
+  const g = Math.round((pts[pts.length - 1].prob - pts[0].prob) * 10) / 10;
+  $("tdelta").textContent = (g >= 0 ? "+" : "") + g + " pts";
+  $("tnote").textContent = "Your last " + pts.length + " predictions, saved in this browser.";
+}
+function renderReports() {
+  const h = hist().slice().reverse();
+  $("rp-empty").hidden = h.length > 0; $("rp").hidden = !h.length; $("clear").hidden = !h.length;
+  $("rp").querySelector("tbody").innerHTML = h.map((q) => `<tr><td>${new Date(q.t).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" })}</td><td><b>${q.prob}%</b></td><td>${q.cgpa}</td><td>${q.aptitude}</td><td>${q.projects}</td><td>${q.training ? "Yes" : "No"}</td></tr>`).join("");
+}
+$("print").addEventListener("click", () => window.print());
+$("clear").addEventListener("click", () => { save(HK, []); renderReports(); });
+$("bell").addEventListener("click", () => {
+  const n = $("notes"), r = state && state.rows[0];
+  n.innerHTML = r ? `<b>Biggest opportunity</b><p>${r.label} (${r.gain > 0 ? "+" : ""}${r.gain} pts)</p>` : "<p>No notifications yet. Generate a prediction to get insights.</p>";
+  n.hidden = !n.hidden;
+});
+applyUser();
+
+</script>
+</body></html>
